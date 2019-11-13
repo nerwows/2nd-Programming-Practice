@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace G_A.Praktika
 {
-    class choresDone : choresPending
+    public class choresDone : choresPending
     {
         public bool orderComplete;
     }

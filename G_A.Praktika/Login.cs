@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace G_A.Praktika
 {
@@ -13,7 +8,7 @@ namespace G_A.Praktika
         {
             SQL _SQL = new SQL();
 
-            if (_SQL.DB_UserExists(Username, Password))
+            if (_SQL.userExists(Username, Password))
             {
                 MessageBox.Show("Sėkmingai prisijungėte!");
 
@@ -23,13 +18,6 @@ namespace G_A.Praktika
             }
             else
                 MessageBox.Show("Neteisingas vartotojo vardas arba slaptažodis!");
-
-            //if(_SQL.DB_UserExists(Username, Password))
-            //{
-            //    MessageBox.Show("Sėkmingai prisijungėte!");
-            //    new Main(Username).Show();
-            //}
-            //_SQL.sanityCheck();
         }
     }
 }

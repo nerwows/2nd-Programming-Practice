@@ -22,9 +22,25 @@ namespace G_A.Praktika
 
         public void addNewOrder(string Name, string Surname, string Phone, string Mail, choresPending CP)
         {
-            O[cOrder] = new Order(Name, Surname, Phone, Mail, CP);
+            Order _Order = new Order(Name, Surname, Phone, Mail, CP);
+
+            O[cOrder] = _Order;
             listBox1.Items.Add(string.Format("{0}. {1} {2} {3}", cOrder + 1, Phone, Name, Surname));
+
+            int lastClientID = -1;
+
+            if (!_SQL.clientExists(_Order))
+            {
+                _SQL.insertClient(_Order);
+                lastClientID = _SQL.getLastInsertID();
+                //MessageBox.Show(lastClientID.ToString());
+            }
             
+            lastClientID = _SQL.readClientID(_Order);
+
+            _SQL.insertDoneOrder(_Order, lastClientID);
+            _SQL.insertPendingOrder(_Order, lastClientID);
+
             cOrder++;
         }
 

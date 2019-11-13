@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace G_A.Praktika
 {
-    class Order
+    public class Order
     {
         public choresDone CD;
         public choresPending CP;
