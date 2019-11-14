@@ -13,22 +13,50 @@ namespace G_A.Praktika
 
         private string Name, Surname, Phone, Mail;
 
-        public Order(string _Name, string _Surname, string _Phone, string _Mail, choresPending _CP)
+        public Order(string _Name, string _Surname, string _Phone, string _Mail, choresPending _CP, choresDone _CD)
         {
             Name = _Name;
             Surname = _Surname;
             Phone = _Phone;
             Mail = _Mail;
             CP = _CP;
-
-            CD = new choresDone();
-        }
-
-        public void setChoresDone(choresDone _CD)
-        {
             CD = _CD;
         }
 
+        #region SET
+
+        public void setName(string x)
+        {
+            Name = x;
+        }
+        public void setSurname(string x)
+        {
+            Surname = x;
+        }
+
+        public void setPhone(string x)
+        {
+            Phone = x;
+        }
+
+        public void setMail(string x)
+        {
+            Mail = x;
+        }
+
+        public void setChoresDone(choresDone x)
+        {
+            CD = x;
+        }
+
+        public void setChoresPending(choresDone x)
+        {
+            CP = x;
+        }
+
+        #endregion
+
+        #region GET
         public string getName()
         {
             return Name;
@@ -48,5 +76,6 @@ namespace G_A.Praktika
         {
             return Mail;
         }
+        #endregion
     }
 }

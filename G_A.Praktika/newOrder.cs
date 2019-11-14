@@ -75,17 +75,27 @@ namespace G_A.Praktika
 
                     if (checkBox1.Checked)
                         CP.changeOil = true;
+                    else
+                        CP.changeOil = false;
 
                     if (checkBox2.Checked)
                         CP.changeTyres = true;
+                    else
+                        CP.changeTyres = false;
 
                     if (checkBox3.Checked)
                         CP.washCar = true;
+                    else
+                        CP.washCar = false;
 
                     if (checkBox4.Checked)
                         CP.engineService = true;
+                    else
+                        CP.engineService = false;
 
-                    M.addNewOrder(textBox1.Text, textBox2.Text, textBox3.Text, textBox4.Text, CP);
+                    //MessageBox.Show(CP.changeOil + CP.changeTyres + CP.washCar + CP.engineService);
+
+                    M.addNewOrder(textBox1.Text, textBox2.Text, textBox3.Text, textBox4.Text, CP, new choresDone());
 
                     MessageBox.Show("Užsakymas pridėtas!");
                     Hide();
