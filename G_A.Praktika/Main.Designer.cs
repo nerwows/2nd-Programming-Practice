@@ -114,6 +114,7 @@
             this.checkBox6.TabIndex = 3;
             this.checkBox6.Text = "Change Tyres";
             this.checkBox6.UseVisualStyleBackColor = true;
+            this.checkBox6.CheckedChanged += new System.EventHandler(this.checkBox6_CheckedChanged);
             // 
             // checkBox7
             // 
@@ -124,6 +125,7 @@
             this.checkBox7.TabIndex = 2;
             this.checkBox7.Text = "Change Oil";
             this.checkBox7.UseVisualStyleBackColor = true;
+            this.checkBox7.CheckedChanged += new System.EventHandler(this.checkBox7_CheckedChanged);
             // 
             // checkBox5
             // 
@@ -134,6 +136,7 @@
             this.checkBox5.TabIndex = 6;
             this.checkBox5.Text = "Order complete";
             this.checkBox5.UseVisualStyleBackColor = true;
+            this.checkBox5.CheckedChanged += new System.EventHandler(this.checkBox5_CheckedChanged);
             // 
             // checkBox8
             // 
@@ -144,6 +147,7 @@
             this.checkBox8.TabIndex = 4;
             this.checkBox8.Text = "Wash car";
             this.checkBox8.UseVisualStyleBackColor = true;
+            this.checkBox8.CheckedChanged += new System.EventHandler(this.checkBox8_CheckedChanged);
             // 
             // checkBox9
             // 
@@ -154,6 +158,7 @@
             this.checkBox9.TabIndex = 5;
             this.checkBox9.Text = "Engine service";
             this.checkBox9.UseVisualStyleBackColor = true;
+            this.checkBox9.CheckedChanged += new System.EventHandler(this.checkBox9_CheckedChanged);
             // 
             // button2
             // 

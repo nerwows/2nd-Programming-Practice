@@ -82,7 +82,6 @@ namespace G_A.Praktika
         {
             using (SQLiteCommand sqlite_cmd = SQLITE_CONNECTION.CreateCommand())
             {
-                //MessageBox.Show(O.CP.changeOil.ToString() + O.CP.changeTyres + O.CP.washCar + O.CP.engineService);
                 sqlite_cmd.CommandText = String.Format("INSERT INTO pendingClientOrder (clientID, changeOil, changeTyres, washCar, engineService) VALUES('{0}', '{1}', '{2}', '{3}', '{4}');", clientID, O.CP.changeOil, O.CD.changeTyres, O.CD.washCar, O.CD.engineService);
                 sqlite_cmd.ExecuteNonQuery();
             }
@@ -93,7 +92,6 @@ namespace G_A.Praktika
             using (SQLiteCommand sqlite_cmd = SQLITE_CONNECTION.CreateCommand())
             {
                 sqlite_cmd.CommandText = String.Format("INSERT INTO doneClientOrder (clientID, changeOil, changeTyres, washCar, engineService, orderComplete) VALUES('{0}', '{1}', '{2}', '{3}', '{4}', '{5}');", clientID, O.CP.changeOil, O.CD.changeTyres, O.CD.washCar, O.CD.engineService, O.CD.orderComplete);
-                //MessageBox.Show(sqlite_cmd.CommandText);
                 sqlite_cmd.ExecuteNonQuery();
             }
         }
@@ -159,14 +157,16 @@ namespace G_A.Praktika
                 {
                     while (sqlite_datareader.Read())
                     {
-                        if (sqlite_datareader.GetString(1) == O.getName() &&
-                            sqlite_datareader.GetString(2) == O.getSurname() &&
-                            sqlite_datareader.GetString(3) == O.getPhone() &&
-                            sqlite_datareader.GetString(4) == O.getMail()
+                        if (sqlite_datareader.GetString(0) == O.getName() &&
+                            sqlite_datareader.GetString(1) == O.getSurname() &&
+                            sqlite_datareader.GetString(2) == O.getPhone() &&
+                            sqlite_datareader.GetString(3) == O.getMail()
                             )
                             result = true;
                         else
                             result = false;
+
+                        //MessageBox.Show(sqlite_datareader.GetString(0) + sqlite_datareader.GetString(1) + sqlite_datareader.GetString(2) + sqlite_datareader.GetString(3));
                     }
                 }
             }
@@ -212,26 +212,6 @@ namespace G_A.Praktika
             return result;
         }
 
-        public bool TEST(string Username, string Password)
-        {
-            bool result = false;
-
-            using (SQLiteCommand sqlite_cmd = SQLITE_CONNECTION.CreateCommand())
-            {
-                sqlite_cmd.CommandText = string.Format("SELECT rowid FROM User WHERE Username='{0}' AND Password='{1}'", Username, Password);
-
-                using (SQLiteDataReader sqlite_datareader = sqlite_cmd.ExecuteReader())
-                {
-                    while (sqlite_datareader.Read())
-                    {
-                        int myreader = sqlite_datareader.GetInt32(0);
-                        MessageBox.Show(myreader.ToString());
-                    }
-                }
-            }
-            return result;
-        }
-
         public List<Order> loadData()
         {
             List<Order> O = new List<Order>();
@@ -240,27 +220,41 @@ namespace G_A.Praktika
 
             using (SQLiteCommand sqlite_cmd = SQLITE_CONNECTION.CreateCommand())
             {
-                sqlite_cmd.CommandText = "SELECT * FROM bussinessClient";
+                sqlite_cmd.CommandText = "SELECT * FROM pendingClientOrder";
 
                 using (SQLiteDataReader sqlite_datareader = sqlite_cmd.ExecuteReader())
                 {
                     while (sqlite_datareader.Read())
                     {
-                        string Name = sqlite_datareader.GetString(0);
-                        string Surname = sqlite_datareader.GetString(1);
-                        string Phone = sqlite_datareader.GetString(2);
-                        string Mail = sqlite_datareader.GetString(3);
-
-                        //MessageBox.Show(Name + " " + Surname + " " + Phone + " " + Mail);
-
-                        //MessageBox.Show(GetChoresPending(cID).changeOil.ToString() + GetChoresPending(cID).changeTyres);
-
-                        O.Add(new Order(Name, Surname, Phone, Mail, GetChoresPending(cID), getChoresDone(cID)));
+                        string[] cData = getClientData(sqlite_datareader.GetInt32(0));
+                        //MessageBox.Show(getChoresDone(cID).changeOil.ToString() + getChoresDone(cID).changeTyres + getChoresDone(cID).washCar + getChoresDone(cID).engineService);
+                        O.Add(new Order(cData[0], cData[1], cData[2], cData[3], GetChoresPending(cID), getChoresDone(cID)));
                         cID++;
                     }
                 }
             }
             return O;
+        }
+
+        public string[] getClientData(int id)
+        {
+            string[] result = new string[4];
+
+            using (SQLiteCommand sqlite_cmd = SQLITE_CONNECTION.CreateCommand())
+            {
+                sqlite_cmd.CommandText = string.Format("SELECT * FROM bussinessClient WHERE rowid='{0}'", id);
+
+                using (SQLiteDataReader sqlite_datareader = sqlite_cmd.ExecuteReader())
+                {
+                    while (sqlite_datareader.Read())
+                    {
+                        for (int i = 0; i < 4; i++)
+                            result[i] = sqlite_datareader.GetString(i);
+                    }
+                }
+            }
+
+            return result;
         }
 
         public choresPending GetChoresPending(int id)
@@ -269,18 +263,20 @@ namespace G_A.Praktika
 
             using (SQLiteCommand sqlite_cmd = SQLITE_CONNECTION.CreateCommand())
             {
-                sqlite_cmd.CommandText = string.Format("SELECT changeOil, changeTyres, washCar, engineService FROM pendingClientOrder WHERE clientID='{0}'", id);
+                sqlite_cmd.CommandText = string.Format("SELECT changeOil, changeTyres, washCar, engineService FROM pendingClientOrder WHERE rowid='{0}'", id);
 
                 using (SQLiteDataReader sqlite_datareader = sqlite_cmd.ExecuteReader())
                 {
                     while (sqlite_datareader.Read())
                     {
+                        //KODEL SKAITO PIRMA DUKART?
+
                         CP.changeOil = Boolean.Parse(sqlite_datareader.GetString(0));
                         CP.changeTyres = Boolean.Parse(sqlite_datareader.GetString(1));
                         CP.washCar = Boolean.Parse(sqlite_datareader.GetString(2));
                         CP.engineService = Boolean.Parse(sqlite_datareader.GetString(3));
 
-                        //MessageBox.Show(CP.changeOil.ToString() + CP.changeTyres + CP.washCar + CP.engineService);
+                        //MessageBox.Show(id + CP.changeOil.ToString() + CP.changeTyres + CP.washCar + CP.engineService);
                     }
                 }
             }
@@ -294,7 +290,7 @@ namespace G_A.Praktika
 
             using (SQLiteCommand sqlite_cmd = SQLITE_CONNECTION.CreateCommand())
             {
-                sqlite_cmd.CommandText = string.Format("SELECT changeOil, changeTyres, washCar, engineService FROM pendingClientOrder WHERE clientID='{0}'", id);
+                sqlite_cmd.CommandText = string.Format("SELECT changeOil, changeTyres, washCar, engineService, orderComplete FROM doneClientOrder WHERE rowid='{0}'", id);
 
                 using (SQLiteDataReader sqlite_datareader = sqlite_cmd.ExecuteReader())
                 {
@@ -304,13 +300,25 @@ namespace G_A.Praktika
                         CD.changeTyres = Boolean.Parse(sqlite_datareader.GetString(1));
                         CD.washCar = Boolean.Parse(sqlite_datareader.GetString(2));
                         CD.engineService = Boolean.Parse(sqlite_datareader.GetString(3));
+                        CD.orderComplete = Boolean.Parse(sqlite_datareader.GetString(4));
 
-                        //MessageBox.Show(CD.changeOil.ToString() + CD.changeTyres + CD.washCar + CD.engineService);
+                        //MessageBox.Show(id + CD.changeOil.ToString() + CD.changeTyres + CD.washCar + CD.engineService + CD.orderComplete);
                     }
                 }
             }
 
             return CD;
+        }
+
+        //CREATE TABLE doneClientOrder (clientID INT, changeOil INT, changeTyres INT, washCar INT, engineService INT, orderComplete INT)";
+
+        public void updateChoresDone(int rowid, choresDone CD)
+        {
+            using (SQLiteCommand sqlite_cmd = SQLITE_CONNECTION.CreateCommand())
+            {
+                sqlite_cmd.CommandText = String.Format("UPDATE doneClientOrder SET changeOil='{0}', changeTyres='{1}', washCar='{2}', engineService='{3}', orderComplete='{4}' WHERE rowid='{5}'", CD.changeOil, CD.changeTyres, CD.washCar, CD .engineService, CD.orderComplete, rowid);
+                sqlite_cmd.ExecuteNonQuery();
+            }
         }
 
         public int countOfRows(string tName)

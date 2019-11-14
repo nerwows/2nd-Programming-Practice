@@ -72,30 +72,58 @@ namespace G_A.Praktika
                 else
                 {
                     choresPending CP = new choresPending();
+                    choresDone CD = new choresDone();
 
                     if (checkBox1.Checked)
+                    {
                         CP.changeOil = true;
+                        CD.changeOil = true;
+                    }
                     else
+                    {
                         CP.changeOil = false;
+                        CD.changeOil = false;
+                    }
+
 
                     if (checkBox2.Checked)
+                    {
                         CP.changeTyres = true;
+                        CD.changeTyres = true;
+                    }
                     else
+                    {
                         CP.changeTyres = false;
+                        CD.changeTyres = false;
+                    }
+
 
                     if (checkBox3.Checked)
+                    {
                         CP.washCar = true;
+                        CD.washCar = true;
+                    }
                     else
+                    {
                         CP.washCar = false;
+                        CD.washCar = false;
+                    }
+
 
                     if (checkBox4.Checked)
+                    {
                         CP.engineService = true;
+                        CD.engineService = true;
+                    }
                     else
+                    {
                         CP.engineService = false;
+                        CD.engineService = false;
+                    }
 
-                    //MessageBox.Show(CP.changeOil + CP.changeTyres + CP.washCar + CP.engineService);
+                    CD.orderComplete = false;
 
-                    M.addNewOrder(textBox1.Text, textBox2.Text, textBox3.Text, textBox4.Text, CP, new choresDone());
+                    M.addNewOrder(textBox1.Text, textBox2.Text, textBox3.Text, textBox4.Text, CP, CD);
 
                     MessageBox.Show("Užsakymas pridėtas!");
                     Hide();

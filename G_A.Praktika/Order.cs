@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace G_A.Praktika
 {
@@ -47,6 +48,7 @@ namespace G_A.Praktika
         public void setChoresDone(choresDone x)
         {
             CD = x;
+            //MessageBox.Show(x.changeOil.ToString() + x.changeTyres + x.engineService + x.washCar + x.orderComplete);
         }
 
         public void setChoresPending(choresDone x)

@@ -21,5 +21,10 @@ namespace G_A.Praktika
         {
             new Login(textBox1.Text, textBox2.Text, this);
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
