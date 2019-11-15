@@ -13,7 +13,7 @@ namespace G_A.Praktika
     public partial class Main : Form
     {
         private string _Username;
-        private Form1 _F;
+        private fLogin _F;
 
         List<Order> O = new List<Order>();
 
@@ -46,7 +46,7 @@ namespace G_A.Praktika
             _SQL.insertPendingOrder(_Order, lastClientID);
         }
 
-        public Main(string Username, Form1 F)
+        public Main(string Username, fLogin F)
         {
             InitializeComponent();
 
@@ -203,34 +203,41 @@ namespace G_A.Praktika
 
         private void checkBox7_CheckedChanged(object sender, EventArgs e)
         {
+            checkBoxPrevention();
         }
 
         private void checkBox6_CheckedChanged(object sender, EventArgs e)
         {
-
+            checkBoxPrevention();
         }
 
         private void checkBox8_CheckedChanged(object sender, EventArgs e)
         {
-
+            checkBoxPrevention();
         }
 
         private void checkBox9_CheckedChanged(object sender, EventArgs e)
         {
-
+            checkBoxPrevention();
         }
 
         private void checkBox5_CheckedChanged(object sender, EventArgs e)
         {
-            //if((checkBox1.Checked && !checkBox7.Checked) || 
-            //    (checkBox2.Checked && !checkBox6.Checked) ||
-            //    (checkBox3.Checked && !checkBox8.Checked) ||
-            //    (checkBox4.Checked && !checkBox9.Checked)
-            //    )
-            //{
-            //    MessageBox.Show("Įvygdytas ne visas užsakymas, tad negalima jo pažymėti, kaip baigto!");
-            //    checkBox5.Checked = false;
-            //}
+            checkBoxPrevention();
+        }
+
+        void checkBoxPrevention()
+        {
+            if ((checkBox1.Checked && !checkBox7.Checked && checkBox7.Enabled) ||
+                (checkBox2.Checked && !checkBox6.Checked && checkBox6.Enabled) ||
+                (checkBox3.Checked && !checkBox8.Checked && checkBox8.Enabled) ||
+                (checkBox4.Checked && !checkBox9.Checked && checkBox9.Enabled)
+                )
+            {
+                checkBox5.Enabled = false;
+            }
+            else
+                checkBox5.Enabled = true;
         }
     }
 }

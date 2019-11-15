@@ -4,7 +4,7 @@ namespace G_A.Praktika
 {
     class Login
     {
-        public Login(string Username, string Password, Form1 F)
+        public Login(string Username, string Password, fLogin F)
         {
             SQL _SQL = new SQL();
 

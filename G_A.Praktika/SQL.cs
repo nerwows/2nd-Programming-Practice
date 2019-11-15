@@ -49,7 +49,7 @@ namespace G_A.Praktika
             return SQLITE_CONNECTION;
         }
 
-        static private void CreateTable()
+        private static void CreateTable()
         {
             using (SQLiteCommand sqlite_cmd = SQLITE_CONNECTION.CreateCommand())
             {
